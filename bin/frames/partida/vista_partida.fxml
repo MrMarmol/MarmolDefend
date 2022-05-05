@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="base" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="frames.partida.ControladorPartida">
+   <children>
+      <ImageView fx:id="marcoHistoria" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../archivos/imagenes/menu/marco_partida.png" />
+         </image>
+      </ImageView>
+      <ScrollPane fx:id="scroll" prefHeight="1100.0" prefWidth="1000.0">
+        <content>
+          <AnchorPane fx:id="mapa" minHeight="0.0" minWidth="0.0" prefHeight="1100.0" prefWidth="1000.0">
+               <children>
+                  <Canvas fx:id="canvas" height="1200.0" width="3106.0" />
+               </children>
+            </AnchorPane>
+        </content>
+      </ScrollPane>
+      <ImageView fx:id="imgMarco_superior" fitHeight="44.0" fitWidth="347.0" layoutX="254.0" layoutY="257.0" pickOnBounds="true" preserveRatio="false">
+         <image>
+            <Image url="@../../archivos/imagenes/menu/marco_superior_partida.PNG" />
+         </image>
+      </ImageView>
+      <Group fx:id="gAcciones">
+         <children>
+            <Text fx:id="tAcciones" strokeType="OUTSIDE" strokeWidth="0.0" text="ACCIONES">
+               <font>
+                  <Font name="Arimo" size="14.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnAtacar" mnemonicParsing="false" onAction="#iniciar_ataque" prefHeight="30.0" prefWidth="95.0" text="Atacar" />
+            <Button fx:id="btnRecolectar" mnemonicParsing="false" onAction="#iniciar_recolectar" prefHeight="30.0" prefWidth="95.0" text="Recolectar" />
+            <Button fx:id="btnCancelar" mnemonicParsing="false" onAction="#cancelar_accion" prefHeight="30.0" prefWidth="95.0" text="Cancelar" />
+         </children></Group>
+      <Group fx:id="gHabilidades">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="HABILIDADES">
+               <font>
+                  <Font name="Algerian" size="14.0" />
+               </font>
+            </Text>
+            <Button fx:id="btnHabilidad1" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Habilidad1" />
+            <Button fx:id="btnHabilidad2" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Habilidad2" />
+            <Button fx:id="btnHabilidad3" mnemonicParsing="false" prefHeight="30.0" prefWidth="95.0" text="Habilidad3" />
+         </children></Group>
+      <TextArea fx:id="tHistoria" editable="false" prefHeight="548.0" prefWidth="507.0" />
+      <Group fx:id="gUnidades">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="PRODUCCION" />
+         </children></Group>
+      <Group fx:id="gEdificios">
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Produccion" />
+         </children></Group>
+      <Group fx:id="gEstadisticas">
+         <children>
+            <ImageView fx:id="imgCaraUnidad" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="false" />
+            <Text fx:id="tAt" strokeType="OUTSIDE" strokeWidth="0.0" text="At" />
+            <Text fx:id="tDefensa" strokeType="OUTSIDE" strokeWidth="0.0" text="Def" />
+            <Text fx:id="tPg" strokeType="OUTSIDE" strokeWidth="0.0" text="Pg" />
+            <Text fx:id="tMovimiento" strokeType="OUTSIDE" strokeWidth="0.0" text="Mov" />
+            <Text fx:id="vAt" strokeType="OUTSIDE" strokeWidth="0.0" text="At" />
+            <Text fx:id="vDefensa" strokeType="OUTSIDE" strokeWidth="0.0" text="Def" />
+            <Text fx:id="vPg" strokeType="OUTSIDE" strokeWidth="0.0" text="Pg" />
+            <Text fx:id="vMovimiento" strokeType="OUTSIDE" strokeWidth="0.0" text="Mov" />
+         </children>
+      </Group>
+      <Group fx:id="gRecursos">
+         <children>
+            <ImageView fx:id="imgComida" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgMetal" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgMadera" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="imgOro" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />
+            <Text fx:id="vComida" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="vOro" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="vMetal" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Text fx:id="vMadera" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+         </children>
+      </Group>
+      <Button fx:id="btnPasarTurno" mnemonicParsing="false" onAction="#mostrar_terminar_turno" prefHeight="10.0" prefWidth="96.0" text="TERMINAR" />
+      <Button fx:id="btnCapital" mnemonicParsing="false" prefHeight="30.0" prefWidth="96.0" text="CAPITAL" />
+      <Button fx:id="btnMenu" mnemonicParsing="false" prefHeight="25.0" prefWidth="96.0" text="MENU" />
+      <Group fx:id="gMenuTerminarTurno" visible="false">
+         <children>
+            <ImageView fx:id="imgFondoPasarTurno" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" />
+            <Text fx:id="tTerminarTurno" strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+            <Button fx:id="btnTerminarTurnoSi" mnemonicParsing="false" onAction="#terminar_turno" text="Button" />
+            <Button fx:id="btnTerminarTurnoNo" mnemonicParsing="false" onAction="#cerrar_ventana_terminar_turno" text="Button" />
+         </children>
+      </Group>
+   </children>
+</AnchorPane>
