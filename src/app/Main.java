@@ -1,7 +1,7 @@
 package app;
 	
 import bean.datos_globales.DatosGlobales;
-import frames.menuPrincipal.ConstructorFMenuPrincipal;
+import frames.menuPrincipal.ConstructorMenuPrincipal;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
@@ -9,16 +9,19 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 		
+	private Stage ventana;
+	ConstructorMenuPrincipal menu_principal;
+	
 	public static void main(String[] args) {
 		launch(args);
 	}
 	
 	@Override
 	public void start(Stage ventana) {
-		//Se cargan los datos de uso colectivo
-		DatosGlobales.inicializar(); 
-		//Se carga y se muestra el menú principal
-		ConstructorFMenuPrincipal menu_principal = new ConstructorFMenuPrincipal(ventana);
+		DatosGlobales.inicializar();
+		this.ventana = ventana;
+		menu_principal = new ConstructorMenuPrincipal(ventana);
 		menu_principal.mostrar();
-	}
+		}
+	
 }

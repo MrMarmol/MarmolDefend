@@ -5,39 +5,44 @@ import java.util.ArrayList;
 import bean.botones.BotonBestiario;
 import bean.recurso.Recurso;
 import bean.tablero.casillas.Casilla;
-import bean.unidades.Unidad;
-import procesos.acciones.unidades.alojar.*;
+import bean.unidades.unidades.Unidad;
 import javafx.scene.image.Image;
 
 public class Edificio {
 	
 	private String nombre;
 	private ArrayList<Casilla> casillas;
-	private ArrayList<BotonBestiario> produccion_unidades;
 	private Image imagen;
+	private Image portada;
 	private double x;
 	private double y;
 	private int num_alojamientos;
-	private ArrayList<AccionAlojar> alojamientos;
+	protected ArrayList<Unidad> unidades_alojadas;
 	
 	//El coste para producirlo, el botonEdificio accederá a estos datos. El oro solo para comprar y la comida solo para producir
 	private ArrayList<Recurso> coste;
-	private Recurso metal;
-	private Recurso madera;
 
+	private int at;
+	private int def;
+	private int pg;
+	private int pg_actuales;
+	private String bando;
 	
 	//Constructor de modelo
-	public Edificio(Image imagen, String nombre) {
+	public Edificio(Image imagen, String nombre, Image portada, int at, int def, int pg, int num_alojamientos, ArrayList<Recurso> coste) {
 		this.imagen = imagen;
 		this.nombre = nombre;
+		this.portada = portada;
 		casillas = new ArrayList<Casilla>();
-		coste = new ArrayList<Recurso>();
-		metal = new Recurso("METAL", 100);
-		madera = new Recurso("MADERA", 100);
-		coste.add(metal);
-		coste.add(madera);		
+		this.coste = coste;
+
+		this.at = at;
+		this.def = def;
+		this.pg = pg;
+		this.pg_actuales = this.pg;
+		this.num_alojamientos = num_alojamientos;
 	}
-	//Constructor completo
+	//Constructor lienzo
 	public Edificio(Image imagen, double x, double y,String nombre) {
 		this.imagen = imagen;
 		this.x = x;
@@ -52,13 +57,17 @@ public class Edificio {
 		this.y = edificio.getY();
 		this.nombre = edificio.getNombre();
 		casillas = new ArrayList<Casilla>();
-		coste = new ArrayList<Recurso>();
-		metal = new Recurso("METAL", 100);
-		madera = new Recurso("MADERA", 100);
-		coste.add(metal);
-		coste.add(madera);
-		num_alojamientos = 3;
-		alojamientos = new ArrayList<AccionAlojar>();
+		coste = edificio.getCosteRecursos();
+		
+		num_alojamientos = edificio.getNumAlojamientos();
+		unidades_alojadas = new ArrayList<Unidad>();
+		this.at = edificio.getAt();
+		this.def = edificio.getDef();
+		this.pg = edificio.getPg();
+		this.pg_actuales = this.pg;
+	}
+	public int getNumAlojamientos() {
+		return num_alojamientos;
 	}
 	public String getNombre() {
 		return nombre;
@@ -66,9 +75,22 @@ public class Edificio {
 	public ArrayList<Casilla> getCasillas() {
 		return casillas;
 	}
-	public ArrayList<BotonBestiario> getProducionUnidades() {
-		return produccion_unidades;
+	public int getAt() {
+		return at;
 	}
+	public int getDef() {
+		return def;
+	}
+	public int getPg() {
+		return pg_actuales;
+	}
+	public void recibir_damage(int damage) {
+		pg_actuales-=damage;	
+	}
+	public Image getPortada() {
+		return portada;
+	}
+
 	public Image getImagen() {
 		return imagen;
 	}
@@ -85,31 +107,46 @@ public class Edificio {
 	public void setY(double y) {
 		this.y = y;
 	}
+	public void setBando(String bando) {
+		this.bando = bando;
+	}
+	public String getBando() {
+		return bando;
+	}
 
 	public ArrayList<Recurso> getCosteRecursos() {
 		return coste;
 	}
 	public boolean comprobar_alojamiento() {
-		if(alojamientos.size()<num_alojamientos) 
+		if(unidades_alojadas.size()<num_alojamientos) 
 			return true;		
 		return false;
 	}
-	public void alojar(AccionAlojar alojamiento) {
-		alojamientos.add(alojamiento);				
+	public void alojar(Unidad unidad_alojada) {
+		unidades_alojadas.add(unidad_alojada);				
 	}
 		
-	public ArrayList<AccionAlojar> getUnidadesAlojadas(){
-		return alojamientos;
+	public ArrayList<Unidad> getUnidadesAlojadas(){
+		return unidades_alojadas;
 	}
-	public boolean contiene_unidad(Unidad unidad_alojada) {
-		for(AccionAlojar alojamiento : alojamientos)
-			if(alojamiento.getUnidad().equals(unidad_alojada))
+	public boolean contiene_unidad(Unidad unidad) {
+		for(Unidad unidad_alojada : unidades_alojadas)
+			if(unidad_alojada.equals(unidad))
 				return true;
 		return false;
 	}
 	public void desalojar(Unidad unidad) {
-		for(AccionAlojar alojamiento : alojamientos)
-			if(alojamiento.getUnidad().equals(unidad)) 
-				alojamientos.remove(alojamiento);							
+		for(Unidad unidad_alojada : unidades_alojadas)
+			if(unidad_alojada.equals(unidad)) {
+				unidades_alojadas.remove(unidad_alojada);
+				break;
+			}
+	}
+	public String toString() {
+		String string ="";
+		for(Recurso recurso : coste)
+			string+="recurso = "+recurso.getRecurso()+", cantidad = "+recurso.getCantidad();
+		return "Nombre : "+nombre+"Coste : "+string;
+		
 	}
 }

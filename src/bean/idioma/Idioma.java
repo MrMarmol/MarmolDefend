@@ -13,16 +13,17 @@ public class Idioma extends Properties{
     	getProperties("../../archivos/configuracion/configuracion.properties");
     	
         switch(getProperty("idioma")){
-            case "Español":
+            case "esp":
                     getProperties("../../archivos/idioma/idioma_esp.properties");
-                    idioma = "Español";
+                    idioma = "esp";
                     break;
-            case "Inglés":            	
+            case "eng":            	
                     getProperties("../../archivos/idioma/idioma_eng.properties");
-                    idioma = "Inglés";
+                    idioma = "eng";
                     break;
             default:
                 getProperties("../../archivos/idioma/idioma_eng.properties");
+                idioma = "esp";
         }
 
     }

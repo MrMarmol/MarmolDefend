@@ -7,27 +7,32 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import bean.mapas.DatosMapa;
-import bean.mapas.Rio;
-import bean.tablero.obstaculos.Arbol;
-import bean.tablero.obstaculos.Montana;
-import bean.tablero.obstaculos.Obstaculo;
+import bean.tablero.Key;
+import bean.tablero.casillas.Casilla;
 import bean.datos_globales.DatosGlobales;
 
 public class CargadoMapa {
-//es el que lee los datos del mapa que se elige para el controlador ConstructorFPartida
+//es el que lee los datos del mapa que se elige para el controlador ConstructorPartida
 	
 	private String ruta_mapa;
 	private String largo;
 	private String ancho;
+	private String[] coordenadasCastillo;
+	private double  castilloHostX;
+	private double  castilloHostY;
+	private double  castilloClienteX;
+	private double  castilloClienteY;
 	private String datos[];
-	private Rio rio;
-	private Arbol arbol;
-	private Montana montana;
-	private ArrayList<Obstaculo> obstaculos;
+
+	
+	private ArrayList<Key> casillas_obstaculo;
+	double x;
+	double y;
+	
 	private String linea;
 	
 	public CargadoMapa(String mapa) {
-		obstaculos = new ArrayList<Obstaculo>();
+		casillas_obstaculo = new ArrayList<Key>();
 		ruta_mapa = DatosGlobales.rutas.getProperty("mapa")+mapa+".txt";
 	}
 	
@@ -43,51 +48,32 @@ public class CargadoMapa {
 	public DatosMapa cargar_mapa() throws IOException {
 		System.out.println(ruta_mapa);		
 		BufferedReader bf = new BufferedReader(new FileReader(new File(ruta_mapa)));
+		largo = bf.readLine().replace("h", "");
+		ancho = bf.readLine().replace("w","");
+		
+		//Coordenadas del castillo inicial de los jugadores(h:host,c:cliente)
+		coordenadasCastillo = bf.readLine().replace("s","").split(",");
+		castilloHostX = Double.parseDouble(coordenadasCastillo[0]);
+		castilloHostY = Double.parseDouble(coordenadasCastillo[1]);
+		coordenadasCastillo = bf.readLine().replace("c","").split(",");
+		castilloClienteX = Double.parseDouble(coordenadasCastillo[0]);
+		castilloClienteY = Double.parseDouble(coordenadasCastillo[1]);
+		
+		
 
 		while ((linea = bf.readLine()) != null) {
-			System.out.println(linea);
 			
-			switch(linea.charAt(0)) {
-				
-				case 'h':
-					largo = linea.replace("h","");
-					break;
-				case 'w':
-					ancho = linea.replace("w","");
-					break;
-				case 'r':
-					linea = linea.replace("r","");
-					datos = linea.split(",");
-					rio = new Rio(
-							Integer.parseInt(datos[0]),
-							Integer.parseInt(datos[1]),
-							Integer.parseInt(datos[2]),
-							Integer.parseInt(datos[3])
-							);
-					obstaculos.add(rio);
-				case 'a':
-					linea = linea.replace("a","");
-					datos = linea.split(",");
-					arbol = new Arbol(
-							Integer.parseInt(datos[0]),
-							Integer.parseInt(datos[1]),
-							Integer.parseInt(datos[2]),
-							Integer.parseInt(datos[3])
-							);
-					obstaculos.add(arbol);
-				case 'm':
-					linea = linea.replace("m","");
-					datos = linea.split(",");
-					montana = new Montana(
-							Integer.parseInt(datos[0]),
-							Integer.parseInt(datos[1]),
-							Integer.parseInt(datos[2]),
-							Integer.parseInt(datos[3])
-							);
-					obstaculos.add(montana);
-			}
+			System.out.println(linea);
+			datos = linea.split(",");
+			x = Double.parseDouble(datos[0]);
+			y = Double.parseDouble(datos[1]);			
+			casillas_obstaculo.add(new Key(x, y));
+			
+			
+			
 		}
-		return new DatosMapa(Double.parseDouble(largo), Double.parseDouble(ancho), obstaculos);
+		return new DatosMapa(Double.parseDouble(largo), Double.parseDouble(ancho), casillas_obstaculo, new double[] {castilloHostX, castilloHostY}, 
+				new double[] {castilloClienteX, castilloClienteY});
 	}
 }
 

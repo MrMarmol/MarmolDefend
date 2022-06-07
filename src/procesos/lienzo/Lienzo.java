@@ -1,11 +1,11 @@
 package procesos.lienzo;
 
-import bean.unidades.Unidad;
+import bean.unidades.unidades.Unidad;
 import javafx.scene.canvas.*;
 import javafx.scene.image.Image;
 import javafx.scene.shape.Rectangle;
-import procesos.acciones.unidades.mover.AccionMover;
-import procesos.acciones.unidades.mover.ControladorMovimiento;
+import procesos.acciones.accionesPartida.mover.AccionMover;
+import procesos.acciones.accionesPartida.mover.ControladorMovimiento;
 
 public class Lienzo {
 	
@@ -21,20 +21,14 @@ public class Lienzo {
 		return cuadro;
 	}
 
-	public void dibujar_unidad(AccionMover movimiento, Rectangle coordenadaImagen, double x, double y) {
-	
-		lienzo.drawImage(movimiento.getUnidad().getAnimacion().getSpriteSheet(), //la imagen con todos los movimientos
-		coordenadaImagen.getX(), coordenadaImagen.getY(), coordenadaImagen.getWidth(), coordenadaImagen.getHeight(), //aisla el sprite en concreto del spriteSheet
-		x, y,  //la coordenada para dibujar la imagen
-		coordenadaImagen.getWidth(), coordenadaImagen.getHeight());	//el tamaño de la imagen	
-	}
-	public void dibujar_unidad(Unidad unidad, Rectangle coordenadaImagen, double x, double y) {
+	public void dibujar_unidad(Image spriteSheet, Rectangle coordenadaImagen, double x, double y) {
 		
-		lienzo.drawImage(unidad.getAnimacion().getSpriteSheet(), 
-		coordenadaImagen.getX(), coordenadaImagen.getY(), coordenadaImagen.getWidth(), coordenadaImagen.getHeight(),
-		x, y,  
-		coordenadaImagen.getWidth(), coordenadaImagen.getHeight());		
+		lienzo.drawImage(spriteSheet, //La imagen con todos los sprites
+		coordenadaImagen.getX(), coordenadaImagen.getY(), coordenadaImagen.getWidth(), coordenadaImagen.getHeight(), //aisla el sprite en concreto del spriteSheet
+		x, y,  	//la coordenada donde dibujar la imagen
+		coordenadaImagen.getWidth(), coordenadaImagen.getHeight());		//El tamaño de la imagen
 	}
+	
 	
 	public void dibujar_imagen(Image imagen, double x, double y) {
     	lienzo.drawImage(imagen, x, y);

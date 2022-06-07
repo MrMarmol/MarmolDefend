@@ -2,6 +2,8 @@ package bean.botones;
 
 import bean.edificios.Edificio;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.image.ImageView;
 
 public class BotonEdificio {
 	
@@ -13,12 +15,20 @@ public class BotonEdificio {
 		super();
 		this.edificio = edificio;
 		this.boton = boton;
-		this.boton.setPrefWidth(100);
-		agregar_nombre(edificio);
+		agregar_imagen(edificio);
 	}
-	private void agregar_nombre(Edificio edificio)
+	private void agregar_imagen(Edificio edificio)
 	{
-		boton.setText(edificio.getNombre());
+		ImageView imagen = new ImageView(edificio.getPortada());
+
+		  boton.setGraphic(imagen);
+		
+		//  boton.setContentDisplay(ContentDisplay.TOP);
+		  imagen.fitWidthProperty().bind(boton.widthProperty().divide(2));
+		  imagen.fitHeightProperty().bind(boton.heightProperty().divide(2));
+
+		  imagen.setPreserveRatio(false);
+
 	}
 	public Edificio getEdificio() {
 		return edificio;
